@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {FilterValuesType} from './App';
 import {Button} from './components/Button';
+import {FullInput} from './components/FullInput';
+import {Input} from './components/Input';
 
 type TaskType = {
     id: string
@@ -20,33 +22,6 @@ export function Todolist(props: PropsType) {
 
     const [newTitle, setNewTitle] = useState('')
 
-    const addTaskHandler = () => {
-        props.addTask(newTitle)
-        setNewTitle('')
-    }
-
-    const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setNewTitle(event.currentTarget.value)
-    }
-
-    const onKeyPressHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            addTaskHandler()
-        }
-    }
-
-    const allChangeFilterHandler = () => {
-        props.changeFilter('all')
-    }
-
-    const activeChangeFilterHandler = () => {
-        props.changeFilter('active')
-    }
-
-    const completedChangeFilterHandler = () => {
-        props.changeFilter('completed')
-    }
-
     const tsarChangeFilterHandler = (value: FilterValuesType) => {
         props.changeFilter(value)
     }
@@ -54,19 +29,23 @@ export function Todolist(props: PropsType) {
     const removeTaskHandler = (value:string) => {
         props.removeTask(value)
     }
+
+    const addTaskHandler = () => {
+        props.addTask(newTitle)
+        setNewTitle('')
+    }
     
     return <div>
         <h3>{props.title}</h3>
-        <div>
-            <input value={newTitle} onChange={onChangeHandler} onKeyDown={onKeyPressHandler}/>
-            <button onClick={addTaskHandler}>+</button>
-        </div>
+        {/*<FullInput callBack={props.addTask}/>*/}
+        <Input newTitle={newTitle} setNewTitle={setNewTitle} callBack={addTaskHandler}/>
+        <Button name={'+'} callBack={addTaskHandler}/>
         <ul>
             {
                 props.tasks.map(t => <li key={t.id}>
                     <input type="checkbox" checked={t.isDone}/>
                     <span>{t.title}</span>
-                    <button onClick={()=>removeTaskHandler(t.id)}>x</button>
+                    <Button name={'x'} callBack={()=>removeTaskHandler(t.id)}/>
                 </li>)
             }
         </ul>
