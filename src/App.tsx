@@ -15,14 +15,19 @@ function App() {
         {id: v1(), title: 'GraphQL', isDone: false},
     ]);
 
-    const addTask = (newTitle: string) => {
-        const newTask = {id: v1(), title: newTitle, isDone: false}
-        setTasks([newTask, ...tasks])
+    const changeCheckBox = (taskID: string, value: boolean) => {
+        setTasks(tasks.map(el => el.id === taskID ? {...el, isDone: value} : el))
     }
 
     function removeTask(id: string) {
-        let filteredTasks = tasks.filter(t => t.id != id);
+        let filteredTasks = tasks.filter(t => t.id !== id);
         setTasks(filteredTasks);
+    }
+
+    function addTask(title: string) {
+        let task = {id: v1(), title: title, isDone: false};
+        let newTasks = [task, ...tasks];
+        setTasks(newTasks);
     }
 
     let [filter, setFilter] = useState<FilterValuesType>('all');
@@ -40,6 +45,7 @@ function App() {
         setFilter(value);
     }
 
+
     return (
         <div className="App">
             <Todolist title="What to learn"
@@ -47,7 +53,8 @@ function App() {
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTask={addTask}
-            />
+                      changeCheckBox={changeCheckBox}
+                      filter={filter}/>
         </div>
     );
 }
