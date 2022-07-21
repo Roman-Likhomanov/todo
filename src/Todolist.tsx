@@ -2,8 +2,8 @@ import React, {ChangeEvent} from 'react';
 import {FilterValuesType} from './App';
 import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
-import {Button, Checkbox, IconButton} from '@mui/material';
-import {Delete} from '@mui/icons-material';
+import {Button, Checkbox, IconButton} from '@material-ui/core';
+import {Delete} from '@material-ui/icons';
 
 export type TaskType = {
     id: string
@@ -76,19 +76,19 @@ export function Todolist(props: PropsType) {
                 })
             }
         </div>
-        <div style={{ paddingTop: "10px"}}>
+        <div>
             <Button variant={props.filter === 'all' ? 'outlined' : 'text'}
                     onClick={onAllClickHandler}
-                    color={'secondary'}
+                    color={'default'}
             >All
             </Button>
             <Button variant={props.filter === 'active' ? 'outlined' : 'text'}
                     onClick={onActiveClickHandler}
-                    color={'success'}>Active
+                    color={'primary'}>Active
             </Button>
             <Button variant={props.filter === 'completed' ? 'outlined' : 'text'}
                     onClick={onCompletedClickHandler}
-                    color={'error'}>Completed
+                    color={'secondary'}>Completed
             </Button>
         </div>
     </div>
